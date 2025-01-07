@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: springbook
+      MYSQL_USER: spring
+      MYSQL_PASSWORD: book
+    ports:
+      - "3306:3306" # 로컬 포트 3306 -> 컨테이너 포트 3306
+    volumes:
+      - db_data:/var/lib/mysql # MySQL 데이터 디렉토리를 볼륨에 매핑
+volumes:
+  db_data:
+    driver: local # 로컬 디렉토리에 데이터를 저장
