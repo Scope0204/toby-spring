@@ -5,13 +5,18 @@ import springbook.user.domain.User;
 import java.sql.*;
 
 public class UserDao {
-    public void add(User user) throws ClassNotFoundException, SQLException {
+    // 커넥션을 가져와 반환하는 메서드
+    private Connection getConnection() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");
 
-        // DB를 위한 커넥션을 가져옴
         Connection c = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/springbook", "spring", "book"
         );
+        return c;
+    }
+    public void add(User user) throws ClassNotFoundException, SQLException {
+        // DB 연결을 위한 커넥션을 가져옴
+        Connection c = getConnection();
 
         // SQL 을 담은 Statement
         PreparedStatement ps = c.prepareStatement(
@@ -29,12 +34,8 @@ public class UserDao {
     }
 
     public User get(String id) throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.jdbc.Driver");
-
-        // DB를 위한 커넥션을 가져옴
-        Connection c = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/springbook", "spring", "book"
-        );
+        // DB 연결을 위한 커넥션을 가져옴
+        Connection c = getConnection();
 
         // SQL 을 담은 Statement
         PreparedStatement ps = c.prepareStatement(
