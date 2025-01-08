@@ -4,16 +4,10 @@ import springbook.user.domain.User;
 
 import java.sql.*;
 
-public class UserDao {
+public abstract class UserDao {
     // 커넥션을 가져와 반환하는 메서드
-    private Connection getConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.jdbc.Driver");
+    public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
 
-        Connection c = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/springbook", "spring", "book"
-        );
-        return c;
-    }
     public void add(User user) throws ClassNotFoundException, SQLException {
         // DB 연결을 위한 커넥션을 가져옴
         Connection c = getConnection();
@@ -57,26 +51,6 @@ public class UserDao {
         c.close();
 
         return user;
-    }
-
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        UserDao dao= new UserDao();
-
-        User user = new User();
-        user.setId("scope");
-        user.setName("조준경");
-        user.setPassword("1111");
-
-        dao.add(user);
-
-        System.out.println(user.getId() + "등록 성공!");
-
-        User user2 = dao.get(user.getId());
-        System.out.println(user2.getName());
-        System.out.println(user2.getPassword());
-
-        System.out.println(user2.getId() + "조회 성공!");
-
     }
 }
 
