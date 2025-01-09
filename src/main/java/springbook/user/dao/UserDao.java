@@ -4,13 +4,16 @@ import springbook.user.domain.User;
 
 import java.sql.*;
 
-public abstract class UserDao {
-    // 커넥션을 가져와 반환하는 메서드
-    public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
+public class UserDao {
+    private SimpleConnectionMaker simpleConnectionMaker;
+
+    public UserDao() {
+        simpleConnectionMaker = new SimpleConnectionMaker();
+    }
 
     public void add(User user) throws ClassNotFoundException, SQLException {
         // DB 연결을 위한 커넥션을 가져옴
-        Connection c = getConnection();
+        Connection c = simpleConnectionMaker.makeNewConncection();
 
         // SQL 을 담은 Statement
         PreparedStatement ps = c.prepareStatement(
@@ -29,7 +32,7 @@ public abstract class UserDao {
 
     public User get(String id) throws ClassNotFoundException, SQLException {
         // DB 연결을 위한 커넥션을 가져옴
-        Connection c = getConnection();
+        Connection c = simpleConnectionMaker.makeNewConncection();
 
         // SQL 을 담은 Statement
         PreparedStatement ps = c.prepareStatement(
