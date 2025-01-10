@@ -5,15 +5,15 @@ import springbook.user.domain.User;
 import java.sql.*;
 
 public class UserDao {
-    private SimpleConnectionMaker simpleConnectionMaker;
+    private ConnectionMaker connectionMaker;
 
     public UserDao() {
-        simpleConnectionMaker = new SimpleConnectionMaker();
+        connectionMaker = new DConnectionMaker(); // 인터페이스를 구현한 클래스 이름이 남아있다.
     }
 
     public void add(User user) throws ClassNotFoundException, SQLException {
         // DB 연결을 위한 커넥션을 가져옴
-        Connection c = simpleConnectionMaker.makeNewConncection();
+        Connection c = connectionMaker.makeConnection();
 
         // SQL 을 담은 Statement
         PreparedStatement ps = c.prepareStatement(
@@ -32,7 +32,7 @@ public class UserDao {
 
     public User get(String id) throws ClassNotFoundException, SQLException {
         // DB 연결을 위한 커넥션을 가져옴
-        Connection c = simpleConnectionMaker.makeNewConncection();
+        Connection c = connectionMaker.makeConnection();
 
         // SQL 을 담은 Statement
         PreparedStatement ps = c.prepareStatement(
