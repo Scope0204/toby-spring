@@ -7,8 +7,8 @@ import java.sql.*;
 public class UserDao {
     private ConnectionMaker connectionMaker;
 
-    public UserDao() {
-        connectionMaker = new DConnectionMaker(); // 인터페이스를 구현한 클래스 이름이 남아있다.
+    public UserDao(ConnectionMaker conncectionMaker) {
+        this.connectionMaker = conncectionMaker;
     }
 
     public void add(User user) throws ClassNotFoundException, SQLException {
