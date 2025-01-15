@@ -6,9 +6,8 @@ import java.sql.SQLException;
 
 public class UserDaoTest {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        ConnectionMaker connectionMaker = new DConnectionMaker(); // UserDao가 사용할 ConnectionMaker 구현 클래스를 결정하고 오브젝트를 생성
 
-        UserDao dao = new UserDao(connectionMaker);
+        UserDao dao = new DaoFactory().userDao();
 
         User user = new User();
         user.setId("scope");
